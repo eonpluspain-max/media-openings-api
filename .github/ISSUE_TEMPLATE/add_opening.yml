@@ -1,0 +1,32 @@
+name: "Añadir Opening Manualmente"
+description: "Añade un nuevo ID de TMDB y Deezer al catálogo desde el móvil"
+title: "[Manual]: "
+labels: ["manual-addition"]
+body:
+  - type: input
+    id: tmdb_id
+    attributes:
+      label: ID de TMDB
+      description: El número identificador de TMDB (ej. 1396 para Breaking Bad)
+      placeholder: "Ej: 1396"
+    validations:
+      required: true
+
+  - type: dropdown
+    id: media_type
+    attributes:
+      label: Tipo de contenido
+      options:
+        - tv
+        - movie
+    validations:
+      required: true
+
+  - type: input
+    id: deezer_id
+    attributes:
+      label: ID de la pista en Deezer
+      description: El número de la pista de audio (ej. 12345678)
+      placeholder: "Ej: 12345678"
+    validations:
+      required: true
