@@ -1,32 +1,146 @@
-name: "Añadir Opening Manualmente"
-description: "Añade un nuevo ID de TMDB y Deezer al catálogo desde el móvil"
-title: "[Manual]: "
+name: "Añadir Openings en Lote (Películas y Series)"
+description: "Añade hasta 5 películas y hasta 5 series de golpe desde el móvil"
+title: "[Lote]: "
 labels: ["manual-addition"]
 body:
-  - type: dropdown
-    id: media_type
+  - type: markdown
     attributes:
-      label: ¿Qué tipo de contenido es?
-      options:
-        - Serie (tv)
-        - Película (movie)
-    validations:
-      required: true
+      value: "## 🎬 PELÍCULAS (Máximo 5)"
 
   - type: input
-    id: tmdb_id
+    id: peli_tmdb_1
     attributes:
-      label: ID de TMDB
-      description: El número identificador numérico de TMDB (ej. 1396)
-      placeholder: "Ej: 1396"
-    validations:
-      required: true
-
+      label: "[Peli 1] ID de TMDB"
+      placeholder: "Ej: 550"
   - type: input
-    id: deezer_id
+    id: peli_deezer_1
     attributes:
-      label: ID de la pista en Deezer
-      description: El número de la pista de audio (ej. 12345678)
+      label: "[Peli 1] ID de la pista en Deezer"
       placeholder: "Ej: 12345678"
-    validations:
-      required: true
+
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: input
+    id: peli_tmdb_2
+    attributes:
+      label: "[Peli 2] ID de TMDB (Opcional)"
+      placeholder: "Ej: 550"
+  - type: input
+    id: peli_deezer_2
+    attributes:
+      label: "[Peli 2] ID de la pista en Deezer"
+      placeholder: "Ej: 12345678"
+
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: input
+    id: peli_tmdb_3
+    attributes:
+      label: "[Peli 3] ID de TMDB (Opcional)"
+      placeholder: "Ej: 550"
+  - type: input
+    id: peli_deezer_3
+    attributes:
+      label: "[Peli 3] ID de la pista en Deezer"
+      placeholder: "Ej: 12345678"
+
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: input
+    id: peli_tmdb_4
+    attributes:
+      label: "[Peli 4] ID de TMDB (Opcional)"
+      placeholder: "Ej: 550"
+  - type: input
+    id: peli_deezer_4
+    attributes:
+      label: "[Peli 4] ID de la pista en Deezer"
+      placeholder: "Ej: 12345678"
+
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: input
+    id: peli_tmdb_5
+    attributes:
+      label: "[Peli 5] ID de TMDB (Opcional)"
+      placeholder: "Ej: 550"
+  - type: input
+    id: peli_deezer_5
+    attributes:
+      label: "[Peli 5] ID de la pista en Deezer"
+      placeholder: "Ej: 12345678"
+
+  - type: markdown
+    attributes:
+      value: "# ====================================\n## 📺 SERIES (Máximo 5)"
+
+  - type: input
+    id: serie_tmdb_1
+    attributes:
+      label: "[Serie 1] ID de TMDB (Opcional)"
+      placeholder: "Ej: 1396"
+  - type: input
+    id: serie_deezer_1
+    attributes:
+      label: "[Serie 1] ID de la pista en Deezer"
+      placeholder: "Ej: 12345678"
+
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: input
+    id: serie_tmdb_2
+    attributes:
+      label: "[Serie 2] ID de TMDB (Opcional)"
+      placeholder: "Ej: 1396"
+  - type: input
+    id: serie_deezer_2
+    attributes:
+      label: "[Serie 2] ID de la pista en Deezer"
+      placeholder: "Ej: 12345678"
+
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: input
+    id: serie_tmdb_3
+    attributes:
+      label: "[Serie 3] ID de TMDB (Opcional)"
+      placeholder: "Ej: 1396"
+  - type: input
+    id: serie_deezer_3
+    attributes:
+      label: "[Serie 3] ID de la pista en Deezer"
+      placeholder: "Ej: 12345678"
+
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: input
+    id: serie_tmdb_4
+    attributes:
+      label: "[Serie 4] ID de TMDB (Opcional)"
+      placeholder: "Ej: 1396"
+  - type: input
+    id: serie_deezer_4
+    attributes:
+      label: "[Serie 4] ID de la pista en Deezer"
+      placeholder: "Ej: 12345678"
+
+  - type: markdown
+    attributes:
+      value: "---"
+  - type: input
+    id: serie_tmdb_5
+    attributes:
+      label: "[Serie 5] ID de TMDB (Opcional)"
+      placeholder: "Ej: 1396"
+  - type: input
+    id: serie_deezer_5
+    attributes:
+      label: "[Serie 5] ID de la pista en Deezer"
+      placeholder: "Ej: 12345678"
