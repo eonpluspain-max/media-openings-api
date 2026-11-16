@@ -1,0 +1,31 @@
+```yaml
+name: Actualizar Catalogo Audiovisual
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 4 * * 1'
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+      - run: pip install requests
+      - name: Ejecutar script unificado
+        env:
+          TMDB_API_KEY: ${{ secrets.TMDB_API_KEY }}
+        run: python update_openings.py
+      - name: Guardar cambios en el repositorio
+        run: |
+          git config user.name "Bot Openings"
+          git config user.email "bot@://github.com"
+          git add media_openings.json
+          git commit -m "Actualizacion automatica de catalogo" || exit 0
+          git push
