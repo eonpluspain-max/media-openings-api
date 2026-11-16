@@ -1,0 +1,1 @@
+# media-openings-api
