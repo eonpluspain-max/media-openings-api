@@ -57,29 +57,26 @@ def get_tmdb_details(media_type, item_id):
         if r.status_code != 200:
             return None
         data = r.json()
-    except requests.exceptions.RequestException:
-        return None
 
-    cred_url = (
-        f"https://api.themoviedb.org/3/tv/{item_id}/season/1/credits"
-        if media_type == "tv"
-        else f"https://api.themoviedb.org/3/movie/{item_id}/credits"
-    )
-    
-    composers = []
-    top_cast = []
-    try:
+        cred_url = (
+            f"https://api.themoviedb.org/3/tv/{item_id}/season/1/credits"
+            if media_type == "tv"
+            else f"https://api.themoviedb.org/3/movie/{item_id}/credits"
+        )
         cred_r = requests.get(cred_url, params={"api_key": TMDB_API_KEY}, timeout=10)
+
+        composers = []
+        top_cast = []
         if cred_r.status_code == 200:
             cred_json = cred_r.json()
             crew = cred_json.get("crew", [])
             composers = [c["name"] for c in crew if c.get("job") == "Original Music Composer"][:3]
             top_cast = [c["name"] for c in cred_json.get("cast", [])[:2]]
-    except requests.exceptions.RequestException:
-        pass
 
-    return {
-        "id": item_id,
-        "media_type": media_type,
-        "original_name": data.get("original_name") or data.get("original_title", ""),
-        "english_name": data.get("name") or data.
+        return {
+            "id": item_id,
+            "media_type": media_type,
+            "original_name": data.get("original_name") or data.get("original_title", ""),
+            "english_name": data.get("name") or data.get("title", ""),
+            "release_date": data.get("first_air_date") or data.get("release_date", ""),
+            "origin_countries": data.get("
