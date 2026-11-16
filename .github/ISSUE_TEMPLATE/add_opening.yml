@@ -3,22 +3,22 @@ description: "Añade un nuevo ID de TMDB y Deezer al catálogo desde el móvil"
 title: "[Manual]: "
 labels: ["manual-addition"]
 body:
+  - type: dropdown
+    id: media_type
+    attributes:
+      label: ¿Qué tipo de contenido es?
+      options:
+        - Serie (tv)
+        - Película (movie)
+    validations:
+      required: true
+
   - type: input
     id: tmdb_id
     attributes:
       label: ID de TMDB
-      description: El número identificador de TMDB (ej. 1396 para Breaking Bad)
+      description: El número identificador numérico de TMDB (ej. 1396)
       placeholder: "Ej: 1396"
-    validations:
-      required: true
-
-  - type: dropdown
-    id: media_type
-    attributes:
-      label: Tipo de contenido
-      options:
-        - tv
-        - movie
     validations:
       required: true
 
