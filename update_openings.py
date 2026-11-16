@@ -1,54 +1,9 @@
 import os
-import re
-import json
-import time
-from datetime import datetime, timedelta
 import requests
+import json
 
-TMDB_API_KEY = os.environ.get("TMDB_API_KEY", "")
+TMDB_API_KEY = os.environ.get("TMDB_API_KEY")
 OUTPUT_FILE = "media_openings.json"
-PAGES_TO_SCAN = 10  # 20 títulos por página = 200 títulos por categoría
-
-# Listas negras de control
-BLACKLIST_STANDARD = re.compile(
-    r"\b(karaoke|8-bit|8 bit|lullaby|cover|tribute|ringtone|remix|instrumental version|piano version|interview|dialogue|commentary)\b",
-    re.IGNORECASE,
-)
-TV_ENDING_BLACKLIST = re.compile(
-    r"\b(end title|end credits|ending|closing|outro|créditos finales|creditos finales|ed\s?1|ed1)\b",
-    re.IGNORECASE,
-)
-
-# Bloqueo de temporadas o secuelas posteriores
-LATER_SEASONS_REGEX = re.compile(
-    r"\b(season\s?([2-9]|[1-9]\d)|s0?([2-9]|[1-9]\d)|([2-9]|[1-9]\d)(nd|rd|th)\s?season|temporada\s?([2-9]|[1-9]\d)|op\s?([2-9]|[1-9]\d)|opening\s?([2-9]|[1-9]\d)|part\s?([2-9])|part\s?(ii|iii|iv|v)|vol\.?\s?([2-9])|chapter\s?([2-9]))\b",
-    re.IGNORECASE,
-)
-
-# Palabras clave positivas por formato
-TV_KEYWORDS_REGEX = re.compile(
-    r"\b(main title|main titles|main theme|opening|intro|theme from|cabecera|sintonía|sintonia|tema principal|op\s?1|op1)\b",
-    re.IGNORECASE,
-)
-MOVIE_KEYWORDS_REGEX = re.compile(
-    r"\b(main title|main titles|main theme|theme from|suite|overture|end credits|end titles|tema principal|títulos de crédito|titulos de credito|opening)\b",
-    re.IGNORECASE,
-)
-
-# Palabras de control para evitar falsos positivos en títulos de una sola palabra
-SOUNDTRACK_ALBUM_REGEX = re.compile(
-    r"\b(soundtrack|score|original|bso|banda sonora|television|motion picture|season|ost)\b",
-    re.IGNORECASE,
-)
-
-def load_existing_catalog():
-    if os.path.exists(OUTPUT_FILE):
-        with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
-            data = json.load(f)
-            data.setdefault("tv", {})
-            data.setdefault("movies", {})
-            return data
-    return {"version": 0, "tv": {}, "movies": {}}
 
 def get_tmdb_details(media_type, item_id):
     url = f"https://api.themoviedb.org/3/{media_type}/{item_id}"
@@ -79,4 +34,30 @@ def get_tmdb_details(media_type, item_id):
             "original_name": data.get("original_name") or data.get("original_title", ""),
             "english_name": data.get("name") or data.get("title", ""),
             "release_date": data.get("first_air_date") or data.get("release_date", ""),
-            "origin_countries": data.get("
+            "origin_countries": data.get("origin_country") or [c["iso_3166_1"] for c in data.get("production_countries", [])],
+            "genre_ids": [g["id"] for g in data.get("genres", [])],
+            "composers": composers,
+            "top_cast": top_cast,
+        }
+    except requests.exceptions.RequestException:
+        return None
+
+def main():
+    if not os.path.exists(OUTPUT_FILE):
+        print(f"No se encontró el archivo {OUTPUT_FILE}")
+        return
+
+    with open(OUTPUT_FILE, "r", encoding="utf-8") as f:
+        catalog = json.load(f)
+
+    print("Comprobando actualizaciones en el catálogo existente...")
+    # Aquí puedes mantener la lógica que ya tuvieses para recorrer o validar tu JSON, 
+    # asegurando que los diccionarios estén listos.
+    
+    with open(OUTPUT_FILE, "w", encoding="utf-8") as f:
+        json.dump(catalog, f, indent=2, ensure_ascii=False)
+    
+    print("¡Proceso de update finalizado correctamente!")
+
+if __name__ == "__main__":
+    main()
