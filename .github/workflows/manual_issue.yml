@@ -1,9 +1,5 @@
 name: Procesar Opening Manual
 
-concurrency:
-  group: catalog-update-queue
-  cancel-in-progress: false
-
 on:
   issues:
     types: [opened]
