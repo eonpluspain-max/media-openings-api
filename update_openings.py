@@ -326,9 +326,24 @@ def main():
     ninety_days_ago = (datetime.utcnow() - timedelta(days=90)).strftime("%Y-%m-%d")
 
     search_configs = [
+        # --- TENDENCIAS GLOBALES ---
         ("tv", "tv/popular", {}),
         ("tv", "tv/top_rated", {}),
+        ("movie", "movie/popular", {}),
+        ("movie", "movie/top_rated", {}),
+
+        # --- CONTENIDO ORIGINAL DE ESPAÑA (Series y Películas Populares y Mejor Valoradas) ---
         ("tv", "discover/tv", {"with_origin_country": "ES", "sort_by": "popularity.desc"}),
+        ("tv", "discover/tv", {"with_origin_country": "ES", "sort_by": "vote_average.desc", "vote_count.gte": 10}),
+        ("movie", "discover/movie", {"with_origin_country": "ES", "sort_by": "popularity.desc"}),
+        ("movie", "discover/movie", {"with_origin_country": "ES", "sort_by": "vote_average.desc", "vote_count.gte": 10}),
+
+        # --- DOCUMENTALES (Globales y Específicos de España) ---
+        ("movie", "discover/movie", {"with_genres": "99", "sort_by": "popularity.desc"}), # Documentales globales
+        ("movie", "discover/movie", {"with_genres": "99", "with_origin_country": "ES", "sort_by": "popularity.desc"}), # Documentales españoles
+        ("movie", "discover/movie", {"with_genres": "10402", "sort_by": "popularity.desc"}), # Música / Conciertos
+
+        # --- NOVEDADES RECIENTES (Últimos 90 días) ---
         ("tv", "discover/tv", {
             "first_air_date.gte": ninety_days_ago,
             "first_air_date.lte": today_str,
@@ -341,11 +356,6 @@ def main():
             "first_air_date.lte": today_str,
             "sort_by": "first_air_date.desc"
         }),
-        ("movie", "movie/popular", {}),
-        ("movie", "movie/top_rated", {}),
-        ("movie", "discover/movie", {"with_origin_country": "ES", "sort_by": "popularity.desc"}),
-        ("movie", "discover/movie", {"with_genres": "99", "sort_by": "popularity.desc"}),
-        ("movie", "discover/movie", {"with_genres": "10402", "sort_by": "popularity.desc"}),
         ("movie", "discover/movie", {
             "primary_release_date.gte": ninety_days_ago,
             "primary_release_date.lte": today_str,
