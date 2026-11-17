@@ -1,0 +1,50 @@
+name: Procesar Opening Manual
+
+on:
+  issues:
+    types: [opened, labeled]
+
+permissions:
+  contents: write
+  issues: write
+
+jobs:
+  add-manual-entry:
+    if: startsWith(github.event.issue.title, '[Lote]:') || contains(github.event.issue.labels.*.name, 'manual-addition')
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.11'
+
+      - name: Procesar datos del formulario
+        env:
+          ISSUE_BODY: ${{ github.event.issue.body }}
+        run: python process_issue.py
+
+      - name: Guardar cambios en media_openings.json
+        run: |
+          git config user.name 'Bot Openings'
+          git config user.email 'bot@github.com'
+          git add media_openings.json
+          git commit -m "Manual: Actualizado opening desde Issue #${{ github.event.issue.number }}" || exit 0
+          git push
+
+      - name: Confirmar y cerrar el Issue
+        uses: actions/github-script@v7
+        with:
+          script: |
+            await github.rest.issues.createComment({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              body: '✅ **¡Listo!** El registro se ha guardado/actualizado en `media_openings.json` y la versión del catálogo ha subido.'
+            });
+            await github.rest.issues.update({
+              owner: context.repo.owner,
+              repo: context.repo.repo,
+              issue_number: context.issue.number,
+              state: 'closed'
+            });
