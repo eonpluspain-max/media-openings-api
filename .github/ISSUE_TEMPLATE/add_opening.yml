@@ -1,11 +1,11 @@
 name: "Añadir Openings en Lote (Películas y Series)"
-description: "Añade hasta 5 películas y hasta 5 series de golpe desde el móvil"
+description: "Añade hasta 5 películas y hasta 5 series de golpe desde el móvil (Soporta IDs de Deezer o URLs de audio directas)"
 title: "[Lote]: "
 labels: ["manual-addition"]
 body:
   - type: markdown
     attributes:
-      value: "## 🎬 PELÍCULAS (Máximo 5)"
+      value: "## 🎬 PELÍCULAS (Máximo 5)\n*Puedes poner un ID de Deezer o una URL directa de audio (ej: .mp3)*"
 
   - type: input
     id: peli_tmdb_1
@@ -15,8 +15,8 @@ body:
   - type: input
     id: peli_deezer_1
     attributes:
-      label: "[Peli 1] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Peli 1] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
 
   - type: markdown
     attributes:
@@ -29,8 +29,8 @@ body:
   - type: input
     id: peli_deezer_2
     attributes:
-      label: "[Peli 2] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Peli 2] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
 
   - type: markdown
     attributes:
@@ -43,8 +43,8 @@ body:
   - type: input
     id: peli_deezer_3
     attributes:
-      label: "[Peli 3] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Peli 3] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
 
   - type: markdown
     attributes:
@@ -57,8 +57,8 @@ body:
   - type: input
     id: peli_deezer_4
     attributes:
-      label: "[Peli 4] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Peli 4] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
 
   - type: markdown
     attributes:
@@ -71,12 +71,12 @@ body:
   - type: input
     id: peli_deezer_5
     attributes:
-      label: "[Peli 5] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Peli 5] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
 
   - type: markdown
     attributes:
-      value: "# ====================================\n## 📺 SERIES (Máximo 5)"
+      value: "# ====================================\n## 📺 SERIES (Máximo 5)\n*Puedes poner un ID de Deezer o una URL directa de audio (ej: .mp3)*"
 
   - type: input
     id: serie_tmdb_1
@@ -86,8 +86,8 @@ body:
   - type: input
     id: serie_deezer_1
     attributes:
-      label: "[Serie 1] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Serie 1] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
 
   - type: markdown
     attributes:
@@ -100,8 +100,8 @@ body:
   - type: input
     id: serie_deezer_2
     attributes:
-      label: "[Serie 2] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Serie 2] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
 
   - type: markdown
     attributes:
@@ -114,8 +114,8 @@ body:
   - type: input
     id: serie_deezer_3
     attributes:
-      label: "[Serie 3] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Serie 3] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
 
   - type: markdown
     attributes:
@@ -128,8 +128,8 @@ body:
   - type: input
     id: serie_deezer_4
     attributes:
-      label: "[Serie 4] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Serie 4] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
 
   - type: markdown
     attributes:
@@ -142,5 +142,5 @@ body:
   - type: input
     id: serie_deezer_5
     attributes:
-      label: "[Serie 5] ID de la pista en Deezer"
-      placeholder: "Ej: 12345678"
+      label: "[Serie 5] ID de Deezer o URL de Audio Directa"
+      placeholder: "Ej: 12345678 o https://.../audio.mp3"
