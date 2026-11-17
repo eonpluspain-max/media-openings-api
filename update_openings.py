@@ -265,7 +265,7 @@ def find_best_audio(media):
 
     top_5 = sorted(pre_filtered, key=lambda x: x.get("rank", 0), reverse=True)[:5]
     best_track = None
-    best_score = 44  # Umbral mínimo de seguridad
+    best_score = 44  # Umbral original respetado
 
     for item in top_5:
         details = get_deezer_track_details(item["id"])
@@ -277,29 +277,39 @@ def find_best_audio(media):
             best_track = details
 
     # =========================================================================
-    # NIVEL DE RESCATE (FALLBACK DE SEGURIDAD):
-    # Si las reglas estrictas no encuentran nada, busca por título + compositor 
-    # o soundtrack y toma el primer resultado válido para evitar silencios.
+    # NIVEL DE RESCATE ESTRICTO (FALLBACK CONTROLADO):
+    # Si las reglas no encuentran el opening directo, el rescate solo aceptará 
+    # la pista si el título o el álbum contienen términos musicales oficiales.
     # =========================================================================
     if not best_track:
         fallback_queries = []
         primary_title = media["english_name"] or media["original_name"]
         
         for comp in media["composers"]:
-            fallback_queries.append(f'{primary_title} {comp}')
+            fallback_queries.append(f'"{primary_title}" "{comp}"')
             
-        fallback_queries.append(f'{primary_title} soundtrack')
-        fallback_queries.append(primary_title)
+        fallback_queries.append(f'"{primary_title}" soundtrack')
+        fallback_queries.append(f'"{primary_title}" theme')
+
+        strict_fallback_keywords = re.compile(
+            r"\b(soundtrack|ost|theme|opening|score|bso|banda sonora|main title|principal)\b",
+            re.IGNORECASE,
+        )
 
         for fq in fallback_queries:
             fallback_items = search_deezer(fq, limit=5)
             for f_item in fallback_items:
                 if f_item.get("readable") and f_item.get("preview") and f_item.get("duration", 0) >= 30:
-                    details = get_deezer_track_details(f_item["id"])
-                    if details:
-                        best_track = details
-                        print(f"🛟 [RESCATE/FALLBACK] Aplicado para '{primary_title}' usando query: '{fq}'")
-                        break
+                    track_title = f_item.get("title", "")
+                    album_title = f_item.get("album", {}).get("title", "")
+                    
+                    # 🔒 FILTRO DE RESCATE: Exigimos palabras clave oficiales obligatorias
+                    if strict_fallback_keywords.search(track_title) or strict_fallback_keywords.search(album_title):
+                        details = get_deezer_track_details(f_item["id"])
+                        if details:
+                            best_track = details
+                            print(f"🛟 [RESCATE ESTRICTO] Válido para '{primary_title}' usando query: '{fq}'")
+                            break
             if best_track:
                 break
 
